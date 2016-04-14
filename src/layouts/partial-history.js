@@ -63,14 +63,15 @@ export default new Polymer({
     this.datePicker.adjustPosition();
   },
 
+  toLocaleStringShort(d) {
+    return [(1900 + d.getYear()), (d.getMonth() + 1), d.getDate()].join('-');
+  },
+
   attached() {
-    Date.prototype.toLocaleStringShort = function(){
-        return [(1900 + this.getYear()), (this.getMonth() + 1), this.getDate()].join('-');
-    };
     this.datePicker = new window.Pikaday({
       field: this.$.datePicker.inputElement,
       onSelect: entityHistoryActions.changeCurrentDate,
-    }).setDate((new Date()).toLocaleStringShort());
+    }).setDate(this.toLocaleStringShort(new Date()));
   },
 
   detached() {
